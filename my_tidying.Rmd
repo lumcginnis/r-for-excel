@@ -1,0 +1,31 @@
+---
+title: "my_tidying.Rmd"
+author: "Lucy McGinnis"
+date: "8/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+library(readxl)
+```
+
+## R Markdown
+
+
+```{r cars}
+
+```
+
+## Including Plots
+
+
+
+```{r pressure, echo=FALSE}
+
+```
+
+
