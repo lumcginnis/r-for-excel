@@ -13,19 +13,46 @@ library(janitor)
 library(readxl)
 ```
 
-## R Markdown
+## inverts but make it tidy
+```{r inverts data}
+inverts <- read_excel(here("data", "inverts.xlsx"))
+  View(inverts)
+  names(inverts)
+  summary(inverts)
+```
+  
+#inverts but make it long
+```{r}
+inverts_long <- pivot_longer(data = inverts,
+                             cols = '2016' : '2018',
+                             names_to = "year",
+                             values_to = "sp_count")
 
-
-```{r cars}
-
+inverts_long <- inverts_long %>%
+  mutate(year = as.numeric(year))
 ```
 
-## Including Plots
+#inverts but make it wide
+```{r}
+inverts_wide <- inverts_long %>%
+  pivot_wider(names_from = common_name,
+              values_from = sp_count)
 
+inverts_wide <- inverts_wide %>%
+  clean_names
+```
 
+#inverts but unite some columns
+```{r}
+inverts_unite <- inverts_long %>%
+  unite(col = "site_year",
+        c(site, year),
+        sep = "_")
 
-```{r pressure, echo=FALSE}
-
+inverts_moyr <- inverts_long %>%
+  unite(col = "mo_yr",
+        c(month, year),
+        sep = "/")
 ```
 
 
