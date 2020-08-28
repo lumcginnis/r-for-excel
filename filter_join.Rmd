@@ -1,0 +1,94 @@
+---
+title: "filter_join"
+author: "Lucy McGinnis"
+date: "8/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(readxl)
+library(here)
+library(kableExtra)
+```
+```{r}
+fish <- read_csv(here("data", "fish.csv"))
+kelp_abur <- read_excel(here("data", "kelp.xlsx"), sheet = "abur")
+```
+
+#filtering
+```{r}
+fish_garibaldi <- fish %>%
+  filter(common_name == "garibaldi")
+fish_garibaldi
+
+fish_mohk <- fish %>%
+  filter(site == "mohk")
+fish_mohk
+
+fish_over50 <- fish %>%
+  filter(total_count >= 50)
+fish_over50
+
+fish_3sp <- fish %>%
+  filter(common_name %in% c("garibaldi", "blacksmith", "black surfperch"))
+fish_3sp
+```
+#8.3.3.1 activity
+```{r}
+fish_gar_2016 <- fish %>%
+  filter(common_name == "garibaldi" |
+           year == "2016")
+fish_gar_2016
+```
+
+#yes, and
+```{r}
+aque_2018 <- fish %>%
+  filter(year == 2018, site == "aque")
+aque_2018
+```
+#8.3.5 Activity
+```{r}
+low_gb_wr <- fish %>%
+  filter(common_name %in% c("garibaldi", "rock wrasse"),
+      total_count <= 10)     
+low_gb_wr
+```
+
+#stringr::str_detect() to filter by patterns
+```{r}
+fish_bl <- fish %>%
+  filter(str_detect(common_name, pattern = "black"))
+fish_bl
+```
+#8.3.7 Activity
+```{r}
+fish_it <- fish %>%
+  filter(str_detect(common_name, pattern = "it"))
+fish_it
+```
+
+# full-yen_join() ourselves ahaha
+```{r}
+abur_kelp_fish <- kelp_abur %>%
+  full_join(fish, by = c("year", "site"))
+abur_kelp_fish
+```
+# left-toourownen_join()ment ahaha
+```{r}
+kelp_fish_left <- kelp_abur %>%
+  left_join(fish, by = c("year", "site"))
+kelp_fish_left
+```
+# are you in(ner)_join() yourself ahaha
+```{r}
+kelp_fish_injoin <- kelp_abur %>%
+  inner_join(fish, by = c("year", "site"))
+kelp_fish_injoin
+```
+
+
+
