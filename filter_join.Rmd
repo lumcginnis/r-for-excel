@@ -90,5 +90,27 @@ kelp_fish_injoin <- kelp_abur %>%
 kelp_fish_injoin
 ```
 
+# filter and join
+```{r}
+my_fish_join <- fish %>%
+  filter(year == 2017, site == "abur") %>%
+  left_join(kelp_abur, by = c("year", "site")) %>%
+  mutate(fish_per_frond = total_count / total_fronds)
+
+my_fish_join
+```
+
+# HTML table with kable() and kableExtra
+```{r}
+kable(my_fish_join)
+
+
+
+
+my_fish_join %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE)   #spruce it up
+```
 
 
